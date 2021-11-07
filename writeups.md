@@ -186,7 +186,7 @@ def ecdsa_sign(msg, privkey):
     return msg, sig.r, sig.s
 ```
 
-we see that the nonce is a hash of the message concatenated with the private key. Since the private key is unchanging and we control the value of the message, if we can find an md5 collision, we will have identical nonces for two different messages. Simple google search will turn up a ton of such values. We then can solve a simple equation to get the private key, which we can then use to decrypt the encrypted flag.
+we see that the nonce is essentially a hash of the message hash concatenated with the private key. Since the private key is unchanging and we control the value of the message, if we can find an md5 collision, we will have identical nonces for two different messages. Simple google search will turn up a ton of such values. We then can solve a simple equation to get the private key, which we can then use to decrypt the encrypted flag. If you want to read about ECDSA and the math, click [here](https://blog.trailofbits.com/2020/06/11/ecdsa-handle-with-care/)
 
 Flag: HTB{r3u53d_n0nc35?n4h-w3_g0t_d3t3rm1n15t1c-n0nc3s!}
 
