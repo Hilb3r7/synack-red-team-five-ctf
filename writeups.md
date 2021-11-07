@@ -1,3 +1,5 @@
+[bamhm182's writeups](https://bamhm182.notion.site/Synack-Red-Team-Five-2021-CTF-fc018cae37d34bcf82e5acd364c3f428)
+
 <h1 align="center">WEB</h1>
 
 
@@ -158,11 +160,11 @@ def keygen():
     return hex(h)[2:-1]
 ```
 
-Since we have the seed, we can get the initial value of *h*. This key is 256 bits long, but if we look at the for loop that is presumably meant to make the key random, we see it is only changing the last 16 bits of h. This is easily in the realm of brute forcibility, even with the fact two keys and so are being used as this is only a search space of 2^(32). So we can simply decrypt the encrypted flag with every possible combination of keys until we get a byte string that looks like *HTB{wordswordswords}*.
+Since we have the seed, we can get the initial value of *h*. This key is 256 bits long, but if we look at the for loop that is presumably meant to make the key random, we see it is only changing the last 16 bits of h. This is easily in the realm of brute forcibility, even with the fact two keys are being used as this is only a search space of 2^(32). So we can simply decrypt the encrypted flag with every possible combination of keys until we get a byte string that looks like *HTB{wordswordswords}*.
 
-The other method and the one which was intended is by using a "meet in the middle" attack. We can reasonable assume what a block of plaintext looks like given the format of all the provided message. We can then encrypt that block with every possible key and store the results. Then we can start from the other end since we have the corresponding ciphertext and we can decrypt a block and check if matches one of the blocks we've encrypted. If so then we have both keys. Worst case here is searching 2^(17) so this is considerably fast than the brute force approach.
+The other method and the one which was intended is by using a "meet in the middle" attack. We can reasonably assume what a block of the plaintext looks like given the format of all the provided messages. We can then encrypt that block with every possible key and store the results. Then we can start from the other end since we have the corresponding ciphertext and we can decrypt a block and check if it matches one of the blocks we've encrypted. If so then we have both keys. Worst case here is searching 2^(17) so this is considerably faster than the brute force approach.
 
-One important thing not is that the *challenge.py* script is written in python2, so we need to make sure to use that when we get the value of h, as the value will be different in python3 as the *random.seed()* function is different.
+One important thing to note is that the *challenge.py* script is written in python2, so we need to make sure to use that when we get the value of h, as the value will be different in python3 as the *random.seed()* function is different.
 
 Flag: HTB{_B4D_EncryPt!on_M1tM_4tt4ck_}
 
@@ -198,7 +200,7 @@ openssl rsa -pubin -in pubkey.pem -noout -text -modulus
 
 to get the values for *(N,e)*. If we check [factordb](www.factordb.com) we will see N has been previously factored so we can recover the private key. We could also just run it through [RsaCtfTool](https://github.com/Ganapati/RsaCtfTool) 
 
-
+Flag: HTB{b16_e_5m4ll_d_3qu4l5_w31n3r_4774ck}
 
 <h1 align="center">Reversing</h1>
 
